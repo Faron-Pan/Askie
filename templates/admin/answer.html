@@ -1,0 +1,100 @@
+{% extends 'layout.html' %}
+
+{% block title %}回答问题 - 问匣{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>{% if existing_answer %}编辑回答{% else %}回答问题{% endif %}</h2>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary">返回管理后台</a>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header bg-light">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">问题内容</h5>
+                    <small class="text-muted">{{ question.created.strftime('%Y-%m-%d %H:%M') }}</small>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ question.content }}</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">{% if existing_answer %}编辑回答{% else %}提交回答{% endif %}</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ form.content.label(class="form-label") }}
+                        {{ form.content(class="form-control", rows=5) }}
+                        {% if form.content.errors %}
+                            <div class="text-danger">
+                                {% for error in form.content.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.attachment.label(class="form-label") }}
+                        {{ form.attachment(class="form-control") }}
+                        <div class="form-text">支持图片、音频和文档文件。</div>
+                        {% if form.attachment.errors %}
+                            <div class="text-danger">
+                                {% for error in form.attachment.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    {% if existing_answer and existing_answer.attachment %}
+                        <div class="mb-3">
+                            <label class="form-label">当前附件</label>
+                            <div>
+                                {% if existing_answer.attachment_type == 'image' %}
+                                    <img src="{{ url_for('uploaded_file', filename=existing_answer.attachment) }}" class="img-thumbnail" style="max-height: 200px;" alt="当前附件">
+                                {% elif existing_answer.attachment_type == 'audio' %}
+                                    <audio controls style="max-width: 100%;">
+                                        <source src="{{ url_for('uploaded_file', filename=existing_answer.attachment) }}" type="audio/mpeg">
+                                        您的浏览器不支持音频播放。
+                                    </audio>
+                                {% elif existing_answer.attachment_type == 'pdf' %}
+                                    <div class="mb-2">
+                                        <i class="bi bi-file-earmark-pdf"></i> PDF文件
+                                    </div>
+                                    <a href="{{ url_for('uploaded_file', filename=existing_answer.attachment) }}" class="btn btn-sm btn-outline-primary" target="_blank">
+                                        <i class="bi bi-eye"></i> 查看PDF
+                                    </a>
+                                {% elif existing_answer.attachment_type == 'document' %}
+                                    <div class="mb-2">
+                                        <i class="bi bi-file-earmark-word"></i> 文档文件
+                                    </div>
+                                    <a href="{{ url_for('uploaded_file', filename=existing_answer.attachment) }}" class="btn btn-sm btn-outline-primary" target="_blank">
+                                        <i class="bi bi-download"></i> 下载文档
+                                    </a>
+                                {% else %}
+                                    <a href="{{ url_for('uploaded_file', filename=existing_answer.attachment) }}" class="btn btn-sm btn-outline-primary" target="_blank">
+                                        <i class="bi bi-file-earmark"></i> 查看当前附件
+                                    </a>
+                                {% endif %}
+                                <div class="form-text">上传新附件将替换当前附件。</div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="d-grid gap-2">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

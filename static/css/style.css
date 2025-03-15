@@ -1,0 +1,249 @@
+/* 问匣自定义样式 */
+
+/* 禁用过渡效果的类 */
+.no-transition * {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+:root {
+    /* 浅色模式变量 */
+    --bg-color: #f8f9fa;
+    --text-color: #212529;
+    --card-bg: #fff;
+    --card-border: rgba(0, 0, 0, 0.125);
+    --hover-bg: #f8f9fa;
+    --primary-color: #007bff;
+    --primary-hover: #0069d9;
+    --primary-border: #0062cc;
+    --muted-color: #6c757d;
+    --border-color: #dee2e6;
+    --focus-shadow: rgba(0, 123, 255, 0.25);
+    --card-shadow: rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* 深色模式变量 */
+        --bg-color: #212529;
+        --text-color: #f8f9fa;
+        --card-bg: #343a40;
+        --card-border: rgba(255, 255, 255, 0.125);
+        --hover-bg: #2b3035;
+        --primary-color: #0d6efd;
+        --primary-hover: #0b5ed7;
+        --primary-border: #0a58ca;
+        --muted-color: #adb5bd;
+        --border-color: #495057;
+        --focus-shadow: rgba(13, 110, 253, 0.25);
+        --card-shadow: rgba(0, 0, 0, 0.25);
+    }
+}
+
+/* 全局样式 */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* 页面标题样式 */
+.page-title {
+    margin-bottom: 1.5rem;
+}
+
+/* 卡片样式 */
+.card {
+    border-radius: 0.25rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px var(--card-shadow);
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+}
+
+.card-header {
+    border-top-left-radius: 0.25rem !important;
+    border-top-right-radius: 0.25rem !important;
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* 问题列表样式 */
+.list-group-item {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    margin-bottom: 8px;
+    border-radius: 28px;
+    color: var(--text-color);
+    padding: 1rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: var(--hover-bg);
+    box-shadow: 0 2px 5px var(--card-shadow);
+    transform: translateY(-1px);
+}
+
+/* 按钮样式 */
+.btn {
+    border-radius: 28px !important;
+    padding: 0.5rem 1.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+}
+
+@media (prefers-color-scheme: dark) {
+    .list-group-item:hover {
+        color: #ffffff;
+    }
+}
+
+/* 表单样式 */
+.form-control {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem var(--focus-shadow);
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+/* 自定义文本框控件 */
+.custom-textarea {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    background-color: var(--card-bg);
+    background-clip: padding-box;
+    border: 1px solid var(--border-color);
+    border-radius: 28px !important;
+    color: var(--text-color);
+    resize: vertical;
+}
+
+.custom-textarea:focus {
+    border-color: var(--primary-color);
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem var(--focus-shadow);
+}
+
+.custom-form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+/* 按钮样式 */
+.btn {
+    border-radius: 28px !important;
+    padding: 0.5rem 1.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-border);
+}
+
+.btn-lg {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+}
+
+.btn-sm {
+    padding: 0.25rem 1rem;
+    font-size: 0.875rem;
+}
+
+header.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+footer {
+    background-color: var(--bg-color) !important;
+    border-top: 1px solid var(--border-color);
+    color: var(--muted-color) !important;
+}
+
+/* 警告框样式 */
+.alert {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 0.25rem;
+    box-shadow: 0 1px 3px var(--card-shadow);
+    color: var(--text-color);
+}
+
+/* 分页导航样式 */
+.pagination .page-item .page-link {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 0.25rem;
+    margin: 0 3px;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: var(--hover-bg);
+    z-index: 2;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+/* 数量标签样式 */
+.badge-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    min-width: 1.5rem;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}

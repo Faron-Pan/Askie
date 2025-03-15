@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block title %}提问 - 问匣{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h2 class="mb-4">提出你的问题</h2>
+        <p class="text-muted mb-4">你的问题将以匿名方式提交，没有人知道你是谁。</p>
+        
+        <div class="card" style="border-radius: 28px !important;">
+            <div class="card-body">
+                <form method="post" action="{{ url_for('ask') }}">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ form.content.label(class="custom-form-label") }}
+                        {{ form.content(class="custom-textarea", rows=5) }}
+                        {% if form.content.errors %}
+                            <div class="text-danger">
+                                {% for error in form.content.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="d-grid gap-2">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="mt-4 text-center">
+            <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">返回首页</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}问匣{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <link rel="icon" href="{{ url_for('static', filename='logo.svg') }}" type="image/svg+xml">
+    <!-- 添加关键样式覆盖，确保立即应用 -->
+    <style>
+        .btn {
+            border-radius: 28px !important;
+        }
+        .list-group-item {
+            border-radius: 28px !important;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v={{ now.timestamp() }}">
+</head>
+<body>
+    <header class="bg-primary text-white">
+        <div class="container py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="h3 mb-0">
+                    <a href="{{ url_for('index') }}" class="text-white text-decoration-none d-flex align-items-center">
+                        <img src="{{ url_for('static', filename='logo_white.svg') }}" alt="问匣" width="32" height="32" class="me-2">
+                        <span>问匣</span>
+                    </a>
+                </h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="py-3 mt-4">
+        <div class="container text-center text-muted">
+            <p class="mb-0">问匣 &copy; {{ now.year }}</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 页面加载时禁用所有过渡效果
+        document.body.classList.add('no-transition');
+        
+        // 页面完全加载后，延迟一段时间再启用过渡效果
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.body.classList.remove('no-transition');
+            }, 300); // 300毫秒后启用动画效果
+        });
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

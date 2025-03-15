@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+
+{% block title %}管理后台 - 问匣{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h2>管理后台</h2>
+        <p class="text-muted">在这里您可以管理所有的问题和回答。</p>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-warning">
+                <h4 class="mb-0">待回答问题 ({{ unanswered|length }})</h4>
+            </div>
+            <div class="card-body">
+                {% if unanswered %}
+                    <div class="list-group">
+                        {% for question in unanswered %}
+                        <div class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between mb-2">
+                                <h5 class="mb-1">{{ question.content[:100] }}{% if question.content|length > 100 %}...{% endif %}</h5>
+                                <small>{{ question.created.strftime('%Y-%m-%d %H:%M') }}</small>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <a href="{{ url_for('answer_question', question_id=question.id) }}" class="btn btn-primary btn-sm me-2">回答</a>
+                                <form action="{{ url_for('delete_question', question_id=question.id) }}" method="post" class="d-inline" onsubmit="return confirm('确定要删除这个问题吗？')">
+                                    <button type="submit" class="btn btn-danger btn-sm">删除</button>
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info mb-0">目前没有待回答的问题。</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">已回答问题 ({{ answered|length }})</h4>
+            </div>
+            <div class="card-body">
+                {% if answered %}
+                    <div class="list-group">
+                        {% for question in answered %}
+                        <div class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between mb-2">
+                                <h5 class="mb-1">{{ question.content[:100] }}{% if question.content|length > 100 %}...{% endif %}</h5>
+                                <small>{{ question.created.strftime('%Y-%m-%d %H:%M') }}</small>
+                            </div>
+                            <p class="mb-1 text-muted">回答: {{ question.answer_content[:150] }}{% if question.answer_content|length > 150 %}...{% endif %}</p>
+                            <div class="d-flex justify-content-end mt-2">
+                                <a href="{{ url_for('answer_question', question_id=question.id) }}" class="btn btn-outline-primary btn-sm me-2">编辑回答</a>
+                                <form action="{{ url_for('delete_question', question_id=question.id) }}" method="post" class="d-inline" onsubmit="return confirm('确定要删除这个问题和回答吗？')">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">删除</button>
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info mb-0">目前没有已回答的问题。</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
