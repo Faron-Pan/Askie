@@ -52,7 +52,7 @@ if not cursor.fetchone():
         'INSERT INTO users (username, password, created) VALUES (?, ?, ?)',
         ('admin', hashed_password, datetime.now())
     )
-    print('创建默认管理员账号: admin / admin123')
+    print('创建默认管理员账号，密码: admin123')
 else:
     print('管理员账号已存在')
 

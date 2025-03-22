@@ -13,7 +13,10 @@ app.config['SECRET_KEY'] = 'dev'
 app.config['DATABASE'] = os.path.join(app.root_path, 'askbox.db')
 app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'uploads')
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB 最大上传限制
-app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif', 'mp3', 'wav', 'pdf', 'doc', 'docx'}
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif', 'mp3', 'wav', 'pdf', 'doc', 'docx', 'svg'}
+
+# 确保上传目录存在
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 # 确保上传目录存在
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -125,11 +128,10 @@ def login():
     
     form = LoginForm()
     if form.validate_on_submit():
-        username = form.username.data
         password = form.password.data
         
         db = get_db()
-        user = db.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
+        user = db.execute('SELECT * FROM users WHERE username = ?', ('admin',)).fetchone()
         
         if user and check_password_hash(user['password'], password):
             user_obj = User(user['id'], user['username'], user['password'])
@@ -137,7 +139,7 @@ def login():
             next_page = request.args.get('next')
             return redirect(next_page or url_for('admin_dashboard'))
         
-        flash('用户名或密码错误', 'danger')
+        flash('密码错误', 'danger')
     
     return render_template('login.html', form=form)
 

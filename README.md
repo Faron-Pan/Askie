@@ -42,9 +42,8 @@
    - 前台：http://localhost:5000
    - 后台：http://localhost:5000/admin
 
-## 默认管理员账号
+## 默认管理员密码
 
-- 用户名：admin
 - 密码：admin123
 
 可以在初次运行后通过后台修改密码。
